@@ -12,7 +12,7 @@ import movie_file
 from wishlist import add_to_wishlist, remove_from_wishlist, is_in_wishlist
 
 app = Flask(__name__)
-app.secret_key = "vishal@2006" 
+app.secret_key = "Secret_Key" 
 @app.route('/myprofile', methods=['GET', 'POST'])
 def myprofile():
     user_id = session.get('user_id')
@@ -224,9 +224,9 @@ def admin_users():
 def get_mysql_connection():
     try:
         connection = mysql.connector.connect(
-            host='localhost',  # Replace with your MySQL host
-            user='root',  # Replace with your MySQL username
-            password='88256Kvv@',  # Replace with your MySQL password
+            host='LOCAL_HOST',  # Replace with your MySQL host
+            user='USER_NAME',  # Replace with your MySQL username
+            password='PASS-WORD',  # Replace with your MySQL password
             database='film_frame'  # Replace with your MySQL database name
         )
         if connection.is_connected():
