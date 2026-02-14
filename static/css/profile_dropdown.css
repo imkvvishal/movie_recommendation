@@ -1,0 +1,63 @@
+/* Profile icon dropdown styles */
+/* Profile header dropdown and avatar styles */
+.profile-header-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.profile-avatar-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+.profile-avatar-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #007bff;
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    user-select: none;
+}
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 48px;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+    border-radius: 8px;
+    padding: 0.5rem 0;
+}
+.profile-header-dropdown:hover .profile-dropdown-content,
+.profile-header-dropdown:focus-within .profile-dropdown-content {
+    display: block;
+}
+.profile-dropdown-content a {
+    color: #333;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #eee;
+}
+.profile-dropdown-content a:last-child {
+    border-bottom: none;
+}
+.profile-dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.profile-dropdown-username {
+    display: block;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 10px 20px 5px 20px;
+    border-bottom: 1px solid #eee;
+}

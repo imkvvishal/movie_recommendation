@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Registered Users - Film Frame{% endblock %}
+
+{% block content %}
+<h2>Registered Users</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user['name'] }}</td>
+            <td>{{ user['age'] }}</td>
+            <td>{{ user['phone'] }}</td>
+            <td>{{ user['email'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

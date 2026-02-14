@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}All Movies{% endblock %}
+
+{% block content %}
+<h2>All Movies</h2>
+
+<!-- Category Selection -->
+<div class="categories">
+    <button class="category-btn" onclick="filterMovies('')">All</button>
+    <button class="category-btn" onclick="filterMovies('Tamil')">Tamil</button>
+    <button class="category-btn" onclick="filterMovies('English')">English</button>
+    <button class="category-btn" onclick="filterMovies('Religious')">Religious</button>
+    <button class="category-btn" onclick="filterMovies('Drama')">Drama</button>
+    <button class="category-btn" onclick="filterMovies('Series')">Series</button>
+</div>
+
+<div class="movies-grid" id="movies-grid">
+    {% for movie in movies %}
+    {% set category = '' %}
+    {% if movie.get('type', '').lower() == 'series' %}
+        {% set category = 'Series' %}
+    {% elif movie.genre|lower == 'drama' %}
+        {% set category = 'Drama' %}
+    {% elif movie.genre|lower == 'religious' %}
+        {% set category = 'Religious' %}
+    {% elif movie.language in ['Tamil', 'English'] %}
+        {% set category = movie.language.title() %}
+    {% else %}
+        {% set category = movie.genre.title() %}
+    {% endif %}
+    <div class="movie-card" data-category="{{ category }}" onclick="viewMovie({{ loop.index0 }})">
+        <h3><a href="/movie/{{ loop.index0 }}" style="color:inherit;text-decoration:none;" onclick="event.stopPropagation();">{{ movie.name }}</a></h3>
+        <p><strong>Genre:</strong> <span class="badge">{{ movie.genre }}</span></p>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function filterMovies(category) {
+    const cards = document.querySelectorAll('.movie-card');
+    cards.forEach(card => {
+        // Compare case-insensitively
+        if (category === '' || card.getAttribute('data-category').toLowerCase() === category.toLowerCase()) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+function viewMovie(index) {
+    window.location.href = '/movie/' + index;
+}
+</script>
+
+{% endblock %}

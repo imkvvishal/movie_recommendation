@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Film Frame{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+    <h2>Settings</h2>
+    <form method="POST" action="/settings">
+        <h3>Account Preferences</h3>
+        <label>Receive Email Notifications:</label>
+        <input type="checkbox" name="notifications" {% if user.notifications %}checked{% endif %}><br>
+        <h3>Change Password</h3>
+        <label>Current Password:</label>
+        <input type="password" name="current_password"><br>
+        <label>New Password:</label>
+        <input type="password" name="new_password"><br>
+        <label>Confirm New Password:</label>
+        <input type="password" name="confirm_new_password"><br>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

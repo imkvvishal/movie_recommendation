@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Search Movies{% endblock %}
+
+{% block content %}
+<h2>Search Movies</h2>
+<div class="search-container">
+    <form method="get" class="search-form" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+        <input type="text" id="query" name="query" value="{{ query }}" placeholder="e.g., Inception" class="search-input">
+        <select name="genre" class="search-select">
+            <option value="">All Genres</option>
+            {% for g in genres %}
+            <option value="{{ g }}" {% if genre == g %}selected{% endif %}>{{ g }}</option>
+            {% endfor %}
+        </select>
+        <select name="type" class="search-select">
+            <option value="">All Types</option>
+            {% for t in types %}
+            <option value="{{ t }}" {% if type_ == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+        </select>
+        <select name="language" class="search-select">
+            <option value="">All Languages</option>
+            {% for l in languages %}
+            <option value="{{ l }}" {% if language == l %}selected{% endif %}>{{ l }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+</div>
+
+{% if movies %}
+<div class="movies-grid">
+    {% for movie in movies %}
+    <div class="movie-card">
+        {% if movie.image_url %}
+        <img src="{{ movie.image_url }}" alt="{{ movie.name }}">
+        {% endif %}
+        <h3>{{ movie.name }}</h3>
+        <p><strong>Genre:</strong> <span class="badge">{{ movie.genre }}</span></p>
+        <p><strong>Type:</strong> {{ movie.type if movie.type else 'Movie' }}</p>
+        <p><strong>Language:</strong> {{ movie.language }}</p>
+        <p><strong>Rating:</strong> <span class="rating">{{ movie.rating }}/10</span></p>
+        <p><strong>Actor:</strong> {{ movie.actor }}</p>
+        <p><strong>Actress:</strong> {{ movie.actress }}</p>
+        <p><strong>Description:</strong> {{ movie.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% elif query %}
+<p>No movies found for "{{ query }}".</p>
+{% endif %}
+{% endblock %}

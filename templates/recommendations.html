@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendations{% endblock %}
+
+{% block content %}
+<h2>Movie Recommendations</h2>
+<form method="get" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" value="{{ genre }}" placeholder="e.g., Drama, Action">
+    <label for="mood">Mood:</label>
+    <select id="mood" name="mood">
+        <option value="">Select Mood</option>
+        {% for m in moods %}
+        <option value="{{ m }}" {% if mood == m %}selected{% endif %}>{{ m|capitalize }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Get Recommendations</button>
+</form>
+
+{% if movies %}
+<div class="movies-grid">
+    {% for movie in movies %}
+    <div class="movie-card">
+        {% if movie.image_url %}
+        <img src="{{ movie.image_url }}" alt="{{ movie.name }}">
+        {% endif %}
+        <h3>{{ movie.name }}</h3>
+        <p><strong>Genre:</strong> <span class="badge">{{ movie.genre }}</span></p>
+        <p><strong>Mood:</strong> {{ movie.mood|join(', ') if movie.mood is iterable else movie.mood }}</p>
+        <p><strong>Language:</strong> {{ movie.language }}</p>
+        <p><strong>Rating:</strong> <span class="rating">{{ movie.rating }}/10</span></p>
+        <p><strong>Actor:</strong> {{ movie.actor }}</p>
+        <p><strong>Actress:</strong> {{ movie.actress }}</p>
+        <p><strong>Description:</strong> {{ movie.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% elif genre %}
+<p>No movies found for genre "{{ genre }}".</p>
+{% endif %}
+{% endblock %}

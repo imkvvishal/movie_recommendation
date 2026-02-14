@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}<span style="color:#222;font-weight:900;letter-spacing:2px;">{{ movie.name }}</span> - Movie Details{% endblock %}
+
+{% block content %}
+<style>
+    .movie-detail-card {
+        max-width: 520px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .movie-title {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: #222;
+        margin-bottom: 0.7rem;
+        letter-spacing: 1.5px;
+        text-align: center;
+    }
+    .movie-detail-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.2rem 0;
+    }
+    .movie-detail-list li {
+        margin-bottom: 0.5rem;
+        font-size: 1.08rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .movie-detail-list strong {
+        color: #222;
+        font-weight: 600;
+        min-width: 110px;
+    }
+    .badge {
+        background: #e0e0e0;
+        color: #333;
+        border-radius: 6px;
+        padding: 2px 10px;
+        font-size: 1rem;
+        margin-left: 4px;
+        font-weight: 500;
+    }
+    .rating {
+        color: #ff9800;
+        font-weight: 700;
+    }
+    .btn {
+        background: #222;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 0.6rem 1.5rem;
+        font-size: 1.05rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        margin-top: 1.1rem;
+        display: inline-block;
+        transition: background 0.2s;
+    }
+    .btn:hover {
+        background: #444;
+    }
+    .wishlist-btn {
+        background: #fff;
+        color: #222;
+        border: 1.5px solid #222;
+        margin-left: 0.5rem;
+        font-size: 1.05rem;
+        padding: 0.5rem 1.2rem;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .wishlist-btn.active {
+        background: #222;
+        color: #fff;
+    }
+    .desc {
+        margin-top: 0.7rem;
+        color: #444;
+        font-size: 1.08rem;
+        max-height: 3.5em;
+        overflow: hidden;
+        position: relative;
+        transition: max-height 0.3s;
+    }
+    .desc.expanded {
+        max-height: 100vh;
+    }
+    .expand-link {
+        color: #1976d2;
+        cursor: pointer;
+        font-size: 0.98rem;
+        margin-left: 4px;
+    }
+</style>
+
+<div class="movie-detail-card">
+    <div class="movie-title">{{ movie.name }}</div>
+    <ul class="movie-detail-list">
+        {% if movie.name == 'Kaithi' %}
+            <img src="{{ url_for('static', filename='img/kaithi.jfif') }}" alt="Kaithi" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name == 'Vikram' %}
+            <img src="{{ url_for('static', filename='img/vikram.jfif') }}" alt="Vikram" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name == 'Money Heist' %}
+            <img src="{{ url_for('static', filename='img/moneyheist.jfif') }}" alt="Money Heist" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name=='Stranger Things'%}
+            <img src="{{url_for('static', filename='img/stranger.jfif') }}" alt="Stranger Things" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name == 'Aruvi' %}
+            <img src="{{ url_for('static', filename='img/aruvi.jfif') }}" alt="Aruvi" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name == 'Pariyerum Perumal' %}
+            <img src="{{ url_for('static', filename='img/pariyerum.jfif') }}" alt="Pariyerum Perumal" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% elif movie.name == 'Vada Chennai' %}
+            <img src="{{ url_for('static', filename='img/vadacheenai.jfif') }}" alt="Vada Chennai" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+         {% elif movie.name == 'Peranbu' %}
+            <img src="{{ url_for('static', filename='img/peranbu.jfif') }}" alt="Peranbu" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+          {% elif movie.name == 'Thiruvilaiyadal' %}
+            <img src="{{ url_for('static', filename='img/thiruvalidayal.jfif') }}" alt="Thiruvilaiyadal" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+           {% elif movie.name == 'Sri Ramanujar' %}
+            <img src="{{ url_for('static', filename='img/sri ramajurar.jfif') }}" alt="Sri Ramanujar" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Auto Shankar' %}
+            <img src="{{ url_for('static', filename='img/autosankar.jfif') }}" alt="Auto Shankar" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'November Story' %}
+            <img src="{{ url_for('static', filename='img/november.jfif') }}" alt="November Story" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Suzhal: The Vortex' %}
+            <img src="{{ url_for('static', filename='img/suzhal.jfif') }}" alt="Suzhal: The Vortex" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Time Enna Boss!' %}
+            <img src="{{ url_for('static', filename='img/timeenna.jfif') }}" alt="Time Enna Boss" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Live Telecast' %}
+            <img src="{{ url_for('static', filename='img/livetelecast.jfif') }}" alt="Live Telecast" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Paper Rocket' %}
+            <img src="{{ url_for('static', filename='img/paperrocket.jfif') }}" alt="Paper Rocket" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Soorarai Pottru' %}
+            <img src="{{ url_for('static', filename='img/sooraripootru.jfif') }}" alt="Soorarai Pottru" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Avengers: Endgame' %}
+            <img src="{{ url_for('static', filename='img/avengers.jfif') }}" alt="Avengers: Endgame" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'The Dark Knight' %}
+            <img src="{{ url_for('static', filename='img/dark.jfif') }}" alt="The Dark Knight" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Bhagavad Gita(Animated)' %}
+            <img src="{{ url_for('static', filename='img/bhagavad.jfif') }}" alt="Bhagavad Gita(Animated)" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Ramayana' %}
+            <img src="{{ url_for('static', filename='img/ramanaya.jfif') }}" alt="Ramayana" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Sri Ramanujar' %}
+            <img src="{{ url_for('static', filename='img/sri ramajurar.jfif') }}" alt="Sri Ramanujar" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Asuran' %}
+            <img src="{{ url_for('static', filename='img/asuran.jfif') }}" alt="Asuran" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            {% elif movie.name == 'Petta' %}
+            <img src="{{ url_for('static', filename='img/pet ta.jpg') }}" alt="Peeta" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+            
+            {% else %}
+            <img src="{{ url_for('static', filename='img/image.jpg') }}" alt="{{ movie.name }}" style="width:100%;border-radius:12px;margin-bottom:1rem;">
+        {% endif %}
+
+        <li><strong>Genre:</strong> <span class="badge">{{ movie.genre }}</span></li>
+        <li><strong>Language:</strong> <span>{{ movie.language }}</span></li>
+        <li><strong>Rating:</strong> <span class="rating">{{ movie.rating }}/10</span></li>
+        <li><strong>Actor:</strong> <span>{{ movie.actor }}</span></li>
+        <li><strong>Actress:</strong> <span>{{ movie.actress }}</span></li>
+        <li><strong>Mood:</strong> <span>{% if movie.mood %}{% if movie.mood is iterable and movie.mood is not string %}{{ movie.mood|join(', ') }}{% else %}{{ movie.mood }}{% endif %}{% endif %}</span></li>
+    </ul>
+    <div>
+        <strong>Description:</strong>
+        <span class="desc" id="desc">{{ movie.description }}</span>
+        <span class="expand-link" id="expand-link" onclick="toggleDesc()">Read more</span>
+    </div>
+    <div style="margin-top:1.2rem;display:flex;align-items:center;gap:0.5rem;">
+        {% if movie.download_link %}
+            <button class="btn" onclick="window.open('{{ movie.download_link }}', '_blank')">Download Movie</button>
+        {% endif %}
+        <button id="wishlist-btn" class="wishlist-btn{% if in_wishlist %} active{% endif %}" onclick="toggleWishlist({{ index }})">
+            {% if in_wishlist %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}
+        </button>
+    </div>
+    <a href="/movies" class="btn" style="margin-top:1.5rem;">Back to All Movies</a>
+</div>
+<script>
+function toggleDesc() {
+    var desc = document.getElementById('desc');
+    var link = document.getElementById('expand-link');
+    if (desc.classList.contains('expanded')) {
+        desc.classList.remove('expanded');
+        link.textContent = 'Read more';
+    } else {
+        desc.classList.add('expanded');
+        link.textContent = 'Show less';
+    }
+}
+function toggleWishlist(index) {
+    var btn = document.getElementById('wishlist-btn');
+    var isActive = btn.classList.contains('active');
+    fetch(`/wishlist/${isActive ? 'remove' : 'add'}/${index}`, {method: 'POST'})
+        .then(() => {
+            btn.classList.toggle('active');
+            btn.textContent = btn.classList.contains('active') ? 'Remove from Wishlist' : 'Add to Wishlist';
+        });
+}
+</script>
+{% endblock %}

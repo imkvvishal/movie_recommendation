@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - Film Frame{% endblock %}
+
+{% block content %}
+<style>
+    .signup-center-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+    }
+    .signup-form-box {
+        background: #fff;
+        padding: 2.5rem 2.2rem 2rem 2.2rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .signup-form-box h2 {
+        margin-bottom: 1.2rem;
+        font-weight: 900;
+        color: #222;
+        letter-spacing: 1.5px;
+    }
+    .signup-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .signup-form .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .signup-form label {
+        margin-bottom: 0.3rem;
+        font-weight: 500;
+        color: #333;
+    }
+    .signup-form input {
+        padding: 0.6rem 0.9rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .signup-form .btn {
+        margin-top: 0.7rem;
+        width: 100%;
+        font-size: 1.08rem;
+    }
+    .flash-messages {
+        margin-bottom: 1rem;
+        color: #b71c1c;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+<div class="signup-center-container">
+    <div class="signup-form-box">
+        <h2>Sign Up</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form class="signup-form" action="/signup" method="POST">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Enter Full name">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required placeholder="Enter your age">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="phone" id="phone" name="phonenumber" required placeholder="Enter Phone number">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter Email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter Password">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm password">
+            </div>
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p style="margin-top:1rem;">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+    </div>
+</div>
+{% endblock %}

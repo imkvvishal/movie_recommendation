@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Film Frame - Movie Recommendation System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_dropdown.css') }}">
+</head>
+<body>
+    <header class="fixed-header">
+        <div class="header-left">
+            <span class="site-name">Film Frame</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/movies">All Movies</a></li>
+                <li><a href="/recommendations">Recommendations</a></li>
+                <li><a href="/search">Search</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            {% if not session.user_id %}
+            <a href="/login" class="btn">Login</a>
+            <a href="/signup" class="btn">Sign Up</a>
+            {% else %}
+            <div class="profile-header-dropdown">
+                <button class="profile-avatar-btn" aria-label="Profile menu" style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <span class="profile-avatar-circle" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #007bff; color: #fff; font-size: 1.3rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">{{ session.user_name[0]|upper }}</span>
+                </button>
+                <div class="profile-dropdown-content">
+                    <a href="/myprofile">My Profile</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/history">History</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chatbot Toggle Button -->
+    <div id="chatbot-toggle">
+        <button id="chatbot-btn">💬</button>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot" style="display: none;">
+        <div id="chatbot-header">
+            <span>Movie Assistant</span>
+            <button id="chatbot-close">×</button>
+        </div>
+        <div id="chatbot-messages"></div>
+        <input type="text" id="chatbot-input" placeholder="Ask for movie recommendations...">
+        <button id="chatbot-send">Send</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

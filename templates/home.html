@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Film Frame{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <h1>Welcome to Film Frame</h1>
+    <p>Discover your next favorite movie with personalized recommendations and an interactive chatbot.</p>
+    {% if not session.user_id %}
+    <a href="/signup" class="btn">Get Started</a>
+    {% else %}
+    <a href="/movies" class="btn">Browse Movies</a>
+    {% endif %}
+</section>
+
+<section class="paragraph-section">
+    <p>Film Frame is your ultimate destination for movie recommendations. Whether you're looking for the latest blockbusters, classic films, or hidden gems, our system helps you find movies tailored to your tastes. Sign up to access personalized recommendations, search by title, and chat with our AI assistant for instant suggestions.</p>
+</section>
+
+<section class="trending">
+    <h2>Trending Movies</h2>
+    <div id="trending-movies-cards" class="movies-grid">
+        <!-- Movie cards will be injected here by JavaScript -->
+    </div>
+    <script>
+    // Trending movies data from backend
+    const allTrendingMovies = {{ trending_movies|tojson }};
+    // Group movies by language
+    const moviesByLanguage = {};
+    allTrendingMovies.forEach(m => {
+        if (!moviesByLanguage[m.language]) moviesByLanguage[m.language] = [];
+        moviesByLanguage[m.language].push(m);
+    });
+    const languages = Object.keys(moviesByLanguage);
+    let langIndex = 0;
+    function showTrendingCards() {
+        const lang = languages[langIndex];
+        const movies = moviesByLanguage[lang] || [];
+        // Pick top 3 movies for this language
+        const cards = movies.slice(0, 3).map(movie => `
+            <div class="movie-card" onclick="window.location='/movies'">
+                <h3>${movie.name}</h3>
+                <p><strong>Genre:</strong> <span class="badge">${movie.genre}</span></p>
+                <p><strong>Actor:</strong> ${movie.actor}</p>
+                <p><strong>Actress:</strong> ${movie.actress}</p>
+                <p><strong>Language:</strong> ${movie.language}</p>
+                <p><strong>Rating:</strong> <span class="rating">${movie.rating}/10</span></p>
+                <p><strong>Description:</strong> ${movie.description}</p>
+            </div>
+        `).join('');
+        document.getElementById('trending-movies-cards').innerHTML = cards;
+    }
+    showTrendingCards();
+    setInterval(() => {
+        langIndex = (langIndex + 1) % languages.length;
+        showTrendingCards();
+    }, 60000);
+    </script>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p>Email: support@filmframe.com</p>
+            <p>Phone: +1 (123) 456-7890</p>
+        </div>
+        <div class="footer-section">
+            <h3>FAQ</h3>
+            <p><a href="#">How to search movies?</a></p>
+            <p><a href="#">How recommendations work?</a></p>
+        </div>
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <p>Film Frame is a movie recommendation platform built for movie lovers.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Support / Help</h3>
+            <p><a href="#">Help Center</a></p>
+            <p><a href="#">Report an Issue</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Film Frame. All rights reserved.</p>
+    </div>
+</footer>
+{% endblock %}
